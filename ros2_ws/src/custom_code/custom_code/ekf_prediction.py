@@ -18,17 +18,9 @@ class EKFPrediction(Node):
         super().__init__('ekf_prediction')
 
         # Parámetros
-        self.declare_parameter('wheel_base', 0.16)  # Según me fijé, la distancia entre ruedas del turtlebot es 16 cm.
-        self.declare_parameter('alpha1', 0.02)
-        self.declare_parameter('alpha2', 0.02)
-        self.declare_parameter('alpha3', 0.02)
-        self.declare_parameter('alpha4', 0.02)
-
+        self.declare_parameter('wheel_base', 0.16)  # Según me fijé, la distancia entre ruedas del turtlebot es 16 cm
         self.wheel_base = self.get_parameter('wheel_base').get_parameter_value().double_value
-        self.alpha1 = float(self.get_parameter('alpha1').get_parameter_value().double_value)
-        self.alpha2 = float(self.get_parameter('alpha2').get_parameter_value().double_value)
-        self.alpha3 = float(self.get_parameter('alpha3').get_parameter_value().double_value)
-        self.alpha4 = float(self.get_parameter('alpha4').get_parameter_value().double_value)
+
 
         # Publicador y subscriptores
         self.belief_pub = self.create_publisher(Belief, '/belief', 10)
@@ -38,7 +30,7 @@ class EKFPrediction(Node):
         # Estado interno: mu (x,y,theta) y Sigma (3x3)
         self.have_belief = False
         self.mu = np.zeros(3)
-        self.Sigma = np.eye(3) * 1e-6  # valor por defecto pequeño
+        self.Sigma = np.eye(3) * 1e-6
 
         self.get_logger().info('EKFPrediction inicializado (wheel_base=%.3f m)' % self.wheel_base)
 
@@ -54,7 +46,7 @@ class EKFPrediction(Node):
                 raise ValueError('Belief.covariance length != 9')
             self.Sigma = np.array(cov_list).reshape((3, 3))
         except Exception as e:
-            self.get_logger().warn('Error al leer covariance del belief: %s. Usando identidad pequeña.' % str(e))
+            self.get_logger().warn('Error al leer covariance del belief: %s.' % str(e))
             self.Sigma = np.eye(3) * 1e-6
 
         self.have_belief = True
@@ -67,8 +59,7 @@ class EKFPrediction(Node):
             δ_trans, δ_rot1, δ_rot2
             μ̄ = μ + [δ_trans cos(θ+δ_rot1); δ_trans sin(...); δ_rot1+δ_rot2]
             G_t = una matriz 3x3
-            V_t = otra matriz 3x3
-            M_t = matriz de los alphas
+            Q_t = matriz de ruido del movimiento, tambien 3x3
             Σ̄ = G Σ G^T + V M V^T
         """
         if not self.have_belief:
@@ -93,30 +84,11 @@ class EKFPrediction(Node):
         G[0, 2] = -delta_trans * np.sin(theta_mid)
         G[1, 2] = delta_trans * np.cos(theta_mid)
 
-        # Jacobiano V_t (3x3) derivadas de g respecto a los ruídos [δ_rot1, δ_trans, δ_rot2]
-        V = np.zeros((3, 3))
-        # Row 0: d/d(delta_rot1), d/d(delta_trans), d/d(delta_rot2)
-        V[0, 0] = -delta_trans * np.sin(theta_mid)
-        V[0, 1] = np.cos(theta_mid)
-        V[0, 2] = 0.0
-        # Row 1:
-        V[1, 0] = delta_trans * np.cos(theta_mid)
-        V[1, 1] = np.sin(theta_mid)
-        V[1, 2] = 0.0
-        # Row 2:
-        V[2, 0] = 1.0
-        V[2, 1] = 0.0
-        V[2, 2] = 1.0
+        # Q_t: matriz de ruido del movimiento (3x3)
+        Q_t = np.eye(3) * 0.02
 
-        # M_t: covarianza del ruido de movimiento (3x3)
-        M = np.zeros((3, 3))
-
-        M[0, 0] = self.alpha1 * (delta_rot1 ** 2) + self.alpha2 * (delta_trans ** 2)
-        M[1, 1] = self.alpha3 * (delta_trans ** 2) + self.alpha4 * (delta_rot1 ** 2 + delta_rot2 ** 2)
-        M[2, 2] = self.alpha1 * (delta_rot2 ** 2) + self.alpha2 * (delta_trans ** 2)
-
-        # Predicción de la covarianza: Sigma_gorrito = G Sigma G^T + V M V^T
-        Sigma_bar = G.dot(self.Sigma).dot(G.T) + V.dot(M).dot(V.T)
+        # Predicción de la covarianza: Sigma_gorrito = G Sigma G^T + Q_t
+        Sigma_bar = G.dot(self.Sigma).dot(G.T) + Q_t
 
         # Actualizamos estado interno
         self.mu = mu_bar
