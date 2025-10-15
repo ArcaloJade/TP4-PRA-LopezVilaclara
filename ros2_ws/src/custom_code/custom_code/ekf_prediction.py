@@ -115,14 +115,14 @@ class EKFPrediction(Node):
         V[2, 1] = 0.0
         V[2, 2] = 1.0
 
-        # M_t: covarianza del ruido de movimiento (3x3) según la imagen
+        # M_t: covarianza del ruido de movimiento (3x3)
         M = np.zeros((3, 3))
 
         M[0, 0] = self.alpha1 * (delta_rot1 ** 2) + self.alpha2 * (delta_trans ** 2)
         M[1, 1] = self.alpha3 * (delta_trans ** 2) + self.alpha4 * (delta_rot1 ** 2 + delta_rot2 ** 2)
         M[2, 2] = self.alpha1 * (delta_rot2 ** 2) + self.alpha2 * (delta_trans ** 2)
 
-        # Predicción de la covarianza: Sigma_bar = G Sigma G^T + V M V^T
+        # Predicción de la covarianza: Sigma_gorrito = G Sigma G^T + V M V^T
         Sigma_bar = G.dot(self.Sigma).dot(G.T) + V.dot(M).dot(V.T)
 
         # Actualizamos estado interno
