@@ -32,7 +32,7 @@ setup(
             "features = custom_code.features:main",
             "feature_finder = custom_code.feature_finder:main",
             'ekf_prediction = custom_code.ekf_prediction:main',
-            'ekf_correction = custom_code.ekf_correction:main'
+            'ekf_correction = custom_code.ekf_correction:main',
         ],
     },
 )

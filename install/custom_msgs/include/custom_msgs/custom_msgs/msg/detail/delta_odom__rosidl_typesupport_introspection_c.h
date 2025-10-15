@@ -1,1 +1,0 @@
-/home/alumno1/Documents/TP4-PRA-LopezVilaclara/build/custom_msgs/rosidl_typesupport_introspection_c/custom_msgs/msg/detail/delta_odom__rosidl_typesupport_introspection_c.h

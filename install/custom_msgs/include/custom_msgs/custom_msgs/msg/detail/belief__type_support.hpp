@@ -1,1 +1,0 @@
-/home/alumno1/Documents/TP4-PRA-LopezVilaclara/build/custom_msgs/rosidl_generator_cpp/custom_msgs/msg/detail/belief__type_support.hpp
