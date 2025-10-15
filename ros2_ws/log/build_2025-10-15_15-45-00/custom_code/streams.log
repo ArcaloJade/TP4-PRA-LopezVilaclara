@@ -1,0 +1,24 @@
+[0.283s] Invoking command in '/home/alumno1/Documents/TP4-PRA-LopezVilaclara/ros2_ws/build/custom_code': PYTHONPATH=/home/alumno1/Documents/TP4-PRA-LopezVilaclara/ros2_ws/build/custom_code/prefix_override:/usr/lib/python3/dist-packages/colcon_core/task/python/colcon_distutils_commands:/home/alumno1/Documents/TP4-PRA-LopezVilaclara/ros2_ws/install/custom_code/lib/python3.10/site-packages:${PYTHONPATH} /usr/bin/python3 -W ignore:setup.py install is deprecated -W ignore:easy_install command is deprecated setup.py develop --editable --build-directory /home/alumno1/Documents/TP4-PRA-LopezVilaclara/ros2_ws/build/custom_code/build --no-deps symlink_data
+[0.397s] running develop
+[0.463s] running egg_info
+[0.463s] writing custom_code.egg-info/PKG-INFO
+[0.463s] writing dependency_links to custom_code.egg-info/dependency_links.txt
+[0.463s] writing entry points to custom_code.egg-info/entry_points.txt
+[0.463s] writing requirements to custom_code.egg-info/requires.txt
+[0.463s] writing top-level names to custom_code.egg-info/top_level.txt
+[0.464s] reading manifest file 'custom_code.egg-info/SOURCES.txt'
+[0.464s] writing manifest file 'custom_code.egg-info/SOURCES.txt'
+[0.465s] running build_ext
+[0.465s] Creating /home/alumno1/Documents/TP4-PRA-LopezVilaclara/ros2_ws/install/custom_code/lib/python3.10/site-packages/custom-code.egg-link (link to .)
+[0.465s] Installing ekf script to /home/alumno1/Documents/TP4-PRA-LopezVilaclara/ros2_ws/install/custom_code/lib/custom_code
+[0.465s] Installing ekf_correction script to /home/alumno1/Documents/TP4-PRA-LopezVilaclara/ros2_ws/install/custom_code/lib/custom_code
+[0.465s] Installing ekf_prediction script to /home/alumno1/Documents/TP4-PRA-LopezVilaclara/ros2_ws/install/custom_code/lib/custom_code
+[0.465s] Installing feature_finder script to /home/alumno1/Documents/TP4-PRA-LopezVilaclara/ros2_ws/install/custom_code/lib/custom_code
+[0.465s] Installing features script to /home/alumno1/Documents/TP4-PRA-LopezVilaclara/ros2_ws/install/custom_code/lib/custom_code
+[0.465s] Installing likelihood script to /home/alumno1/Documents/TP4-PRA-LopezVilaclara/ros2_ws/install/custom_code/lib/custom_code
+[0.466s] Installing localization script to /home/alumno1/Documents/TP4-PRA-LopezVilaclara/ros2_ws/install/custom_code/lib/custom_code
+[0.466s] Installing my_tf script to /home/alumno1/Documents/TP4-PRA-LopezVilaclara/ros2_ws/install/custom_code/lib/custom_code
+[0.466s] 
+[0.466s] Installed /home/alumno1/Documents/TP4-PRA-LopezVilaclara/ros2_ws/build/custom_code
+[0.466s] running symlink_data
+[0.476s] Invoked command in '/home/alumno1/Documents/TP4-PRA-LopezVilaclara/ros2_ws/build/custom_code' returned '0': PYTHONPATH=/home/alumno1/Documents/TP4-PRA-LopezVilaclara/ros2_ws/build/custom_code/prefix_override:/usr/lib/python3/dist-packages/colcon_core/task/python/colcon_distutils_commands:/home/alumno1/Documents/TP4-PRA-LopezVilaclara/ros2_ws/install/custom_code/lib/python3.10/site-packages:${PYTHONPATH} /usr/bin/python3 -W ignore:setup.py install is deprecated -W ignore:easy_install command is deprecated setup.py develop --editable --build-directory /home/alumno1/Documents/TP4-PRA-LopezVilaclara/ros2_ws/build/custom_code/build --no-deps symlink_data

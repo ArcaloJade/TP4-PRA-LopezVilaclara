@@ -75,16 +75,9 @@ class EKFPrediction(Node):
             self.get_logger().warn('Delta recibido pero no hay belief inicial. Ignorando delta.')
             return
 
-        dr1 = float(msg.dr1)
-        dr2 = float(msg.dr2)
-        dt = float(msg.dt)
-
-        # Construcción de los deltas a partir de desplazamientos de rueda
-        delta_trans = 0.5 * (dr1 + dr2)
-        delta_theta = (dr2 - dr1) / self.wheel_base
-        # Aproximación: rotación antes y después iguales
-        delta_rot1 = delta_theta / 2.0
-        delta_rot2 = delta_theta / 2.0
+        delta_rot1 = float(msg.dr1)
+        delta_rot2 = float(msg.dr2)
+        delta_trans = float(msg.dt)
 
         theta = self.mu[2]
         theta_mid = theta + delta_rot1

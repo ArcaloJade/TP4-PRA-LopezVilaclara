@@ -1,0 +1,24 @@
+[0.269s] Invoking command in '/home/alumno1/Documents/TP4-PRA-LopezVilaclara/build/custom_code': AMENT_PREFIX_PATH=/home/alumno1/Documents/TP4-PRA-LopezVilaclara/install/custom_msgs:${AMENT_PREFIX_PATH} CMAKE_PREFIX_PATH=/home/alumno1/Documents/TP4-PRA-LopezVilaclara/install/custom_msgs:${CMAKE_PREFIX_PATH} LD_LIBRARY_PATH=/home/alumno1/Documents/TP4-PRA-LopezVilaclara/install/custom_msgs/lib:/home/alumno1/turtlebot3_ws/install/turtlebot3_msgs/lib:/home/alumno1/turtlebot3_ws/install/dynamixel_sdk_custom_interfaces/lib:/home/alumno1/turtlebot3_ws/install/dynamixel_sdk/lib:/usr/lib/x86_64-linux-gnu/gazebo-11/plugins:/opt/ros/humble/opt/rviz_ogre_vendor/lib:/opt/ros/humble/lib/x86_64-linux-gnu:/opt/ros/humble/lib:/usr/lib/x86_64-linux-gnu/gazebo-11/plugins PYTHONPATH=/home/alumno1/Documents/TP4-PRA-LopezVilaclara/build/custom_code/prefix_override:/usr/lib/python3/dist-packages/colcon_core/task/python/colcon_distutils_commands:/home/alumno1/Documents/TP4-PRA-LopezVilaclara/install/custom_code/lib/python3.10/site-packages:/home/alumno1/Documents/TP4-PRA-LopezVilaclara/install/custom_msgs/local/lib/python3.10/dist-packages:${PYTHONPATH} /usr/bin/python3 -W ignore:setup.py install is deprecated -W ignore:easy_install command is deprecated setup.py develop --editable --build-directory /home/alumno1/Documents/TP4-PRA-LopezVilaclara/build/custom_code/build --no-deps symlink_data
+[0.380s] running develop
+[0.446s] running egg_info
+[0.446s] writing custom_code.egg-info/PKG-INFO
+[0.447s] writing dependency_links to custom_code.egg-info/dependency_links.txt
+[0.447s] writing entry points to custom_code.egg-info/entry_points.txt
+[0.447s] writing requirements to custom_code.egg-info/requires.txt
+[0.447s] writing top-level names to custom_code.egg-info/top_level.txt
+[0.447s] reading manifest file 'custom_code.egg-info/SOURCES.txt'
+[0.448s] writing manifest file 'custom_code.egg-info/SOURCES.txt'
+[0.448s] running build_ext
+[0.448s] Creating /home/alumno1/Documents/TP4-PRA-LopezVilaclara/install/custom_code/lib/python3.10/site-packages/custom-code.egg-link (link to .)
+[0.449s] Installing ekf script to /home/alumno1/Documents/TP4-PRA-LopezVilaclara/install/custom_code/lib/custom_code
+[0.449s] Installing ekf_correction script to /home/alumno1/Documents/TP4-PRA-LopezVilaclara/install/custom_code/lib/custom_code
+[0.449s] Installing ekf_prediction script to /home/alumno1/Documents/TP4-PRA-LopezVilaclara/install/custom_code/lib/custom_code
+[0.449s] Installing feature_finder script to /home/alumno1/Documents/TP4-PRA-LopezVilaclara/install/custom_code/lib/custom_code
+[0.449s] Installing features script to /home/alumno1/Documents/TP4-PRA-LopezVilaclara/install/custom_code/lib/custom_code
+[0.449s] Installing likelihood script to /home/alumno1/Documents/TP4-PRA-LopezVilaclara/install/custom_code/lib/custom_code
+[0.449s] Installing localization script to /home/alumno1/Documents/TP4-PRA-LopezVilaclara/install/custom_code/lib/custom_code
+[0.449s] Installing my_tf script to /home/alumno1/Documents/TP4-PRA-LopezVilaclara/install/custom_code/lib/custom_code
+[0.449s] 
+[0.449s] Installed /home/alumno1/Documents/TP4-PRA-LopezVilaclara/build/custom_code
+[0.449s] running symlink_data
+[0.459s] Invoked command in '/home/alumno1/Documents/TP4-PRA-LopezVilaclara/build/custom_code' returned '0': AMENT_PREFIX_PATH=/home/alumno1/Documents/TP4-PRA-LopezVilaclara/install/custom_msgs:${AMENT_PREFIX_PATH} CMAKE_PREFIX_PATH=/home/alumno1/Documents/TP4-PRA-LopezVilaclara/install/custom_msgs:${CMAKE_PREFIX_PATH} LD_LIBRARY_PATH=/home/alumno1/Documents/TP4-PRA-LopezVilaclara/install/custom_msgs/lib:/home/alumno1/turtlebot3_ws/install/turtlebot3_msgs/lib:/home/alumno1/turtlebot3_ws/install/dynamixel_sdk_custom_interfaces/lib:/home/alumno1/turtlebot3_ws/install/dynamixel_sdk/lib:/usr/lib/x86_64-linux-gnu/gazebo-11/plugins:/opt/ros/humble/opt/rviz_ogre_vendor/lib:/opt/ros/humble/lib/x86_64-linux-gnu:/opt/ros/humble/lib:/usr/lib/x86_64-linux-gnu/gazebo-11/plugins PYTHONPATH=/home/alumno1/Documents/TP4-PRA-LopezVilaclara/build/custom_code/prefix_override:/usr/lib/python3/dist-packages/colcon_core/task/python/colcon_distutils_commands:/home/alumno1/Documents/TP4-PRA-LopezVilaclara/install/custom_code/lib/python3.10/site-packages:/home/alumno1/Documents/TP4-PRA-LopezVilaclara/install/custom_msgs/local/lib/python3.10/dist-packages:${PYTHONPATH} /usr/bin/python3 -W ignore:setup.py install is deprecated -W ignore:easy_install command is deprecated setup.py develop --editable --build-directory /home/alumno1/Documents/TP4-PRA-LopezVilaclara/build/custom_code/build --no-deps symlink_data
