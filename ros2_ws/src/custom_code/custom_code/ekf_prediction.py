@@ -17,11 +17,6 @@ class EKFPrediction(Node):
     def __init__(self):
         super().__init__('ekf_prediction')
 
-        # Parámetros
-        self.declare_parameter('wheel_base', 0.16)  # Según me fijé, la distancia entre ruedas del turtlebot es 16 cm
-        self.wheel_base = self.get_parameter('wheel_base').get_parameter_value().double_value
-
-
         # Publicador y subscriptores
         self.belief_pub = self.create_publisher(Belief, '/belief', 10)
         self.belief_sub = self.create_subscription(Belief, '/belief', self._belief_callback, 10)
@@ -32,7 +27,7 @@ class EKFPrediction(Node):
         self.mu = np.zeros(3)
         self.Sigma = np.eye(3) * 1e-6
 
-        self.get_logger().info('EKFPrediction inicializado (wheel_base=%.3f m)' % self.wheel_base)
+        self.get_logger().info('EKFPrediction inicializado')
 
     def _belief_callback(self, msg: Belief) -> None:
         """Recibe beliefs (inicial y correcciones). Actualiza el estado interno sin predecir."""
