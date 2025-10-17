@@ -10,7 +10,7 @@ class EKFCorrection(Node):
     def __init__(self):
         super().__init__('ekf_correction')
 
-        # Subscripciones y publicación
+        # Suscripciones y publicación
         self.sub_belief = self.create_subscription(Belief, '/belief', self._belief_callback, 10)
         self.sub_landmarks = self.create_subscription(PoseArray, '/landmarks', self._landmarks_callback, 10)
         self.sub_observed = self.create_subscription(PoseArray, '/observed_landmarks', self._observed_callback, 10)
@@ -21,7 +21,7 @@ class EKFCorrection(Node):
         self.Sigma = None
         self.landmarks = None
 
-        # Matriz de covarianza del ruido de medición
+        # Matriz de covarianza del ruido de medición (que la dan en consigna)
         sigma_r = 0.05
         sigma_phi = 0.05
         self.Q_t = np.array([[sigma_r**2, 0],
@@ -39,7 +39,7 @@ class EKFCorrection(Node):
     def _observed_callback(self, msg: PoseArray):
         """Ejecuta la corrección EKF usando las observaciones"""
         if self.mu is None or self.Sigma is None or self.landmarks is None:
-            return  # Esperar datos iniciales
+            return  # Espero datos iniciales
 
         mu = self.mu
         Sigma = self.Sigma
@@ -47,7 +47,7 @@ class EKFCorrection(Node):
         for i, obs in enumerate(msg.poses):
             r_i, phi_i = obs.position.x, obs.position.z
 
-            # Si no hay detección (valores 0)
+            # Si no hay detección (pongo valores en 0)
             if r_i == 0.0 and phi_i == 0.0:
                 continue
 
@@ -63,7 +63,7 @@ class EKFCorrection(Node):
             z_hat = np.array([np.sqrt(q),
                               np.arctan2(dy, dx) - mu[2]])
 
-            # Normalizar ángulo de z_hat
+            # Normalizo el ángulo de z_hat
             z_hat[1] = np.arctan2(np.sin(z_hat[1]), np.cos(z_hat[1]))
 
             # Jacobiano H_i
@@ -79,7 +79,7 @@ class EKFCorrection(Node):
             # Residual (z_i - z_hat_i)
             z_i = np.array([r_i, phi_i])
             y_i = z_i - z_hat
-            y_i[1] = np.arctan2(np.sin(y_i[1]), np.cos(y_i[1]))  # normalizar ángulo
+            y_i[1] = np.arctan2(np.sin(y_i[1]), np.cos(y_i[1]))  # normalizo el ángulo
 
             # Actualización EKF
             mu = mu + K_i @ y_i
@@ -97,11 +97,7 @@ class EKFCorrection(Node):
 
         self.pub_belief.publish(corrected_belief)
 
-        self.get_logger().info(f"Published corrected belief: μ={mu}, Σ={Sigma.tolist()}")
-
-    def _normalize_angle(self, angle):
-        """Normaliza un ángulo al rango [-pi, pi]"""
-        return np.arctan2(np.sin(angle), np.cos(angle))
+        self.get_logger().info(f"Publicado el belief corregido: μ={mu}, Σ={Sigma.tolist()}")
 
 
 def main(args=None):

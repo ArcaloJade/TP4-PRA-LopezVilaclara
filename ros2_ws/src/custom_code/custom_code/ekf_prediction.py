@@ -17,7 +17,7 @@ class EKFPrediction(Node):
     def __init__(self):
         super().__init__('ekf_prediction')
 
-        # Publicador y subscriptores
+        # Publicador y suscriptores
         self.belief_pub = self.create_publisher(Belief, '/belief', 10)
         self.belief_sub = self.create_subscription(Belief, '/belief', self._belief_callback, 10)
         self.delta_sub = self.create_subscription(DeltaOdom, '/delta', self._delta_callback, 10)
@@ -25,12 +25,12 @@ class EKFPrediction(Node):
         # Estado interno: mu (x,y,theta) y Sigma (3x3)
         self.have_belief = False
         self.mu = np.zeros(3)
-        self.Sigma = np.eye(3) * 1e-6
+        self.Sigma = np.eye(3) * 1e-6   # La inicializo con valores muy chicos
 
         self.get_logger().info('EKFPrediction inicializado')
 
     def _belief_callback(self, msg: Belief) -> None:
-        """Recibe beliefs (inicial y correcciones). Actualiza el estado interno sin predecir."""
+        """Recibe beliefs y actualiza el estado interno sin predecir."""
         self.mu[0] = msg.mu.x
         self.mu[1] = msg.mu.y
         self.mu[2] = msg.mu.theta
@@ -52,13 +52,13 @@ class EKFPrediction(Node):
 
         Implementa las ecuaciones:
             δ_trans, δ_rot1, δ_rot2
-            μ̄ = μ + [δ_trans cos(θ+δ_rot1); δ_trans sin(...); δ_rot1+δ_rot2]
-            G_t = una matriz 3x3
-            Q_t = matriz de ruido del movimiento, tambien 3x3
-            Σ̄ = G Σ G^T + V M V^T
+            μ̄ = μ + [δ_trans cos(θ+δ_rot1); δ_trans sin(θ+δ_rot1); δ_rot1+δ_rot2]
+            G_t = una matriz Jacobiana 3x3
+            Q_t = matriz de ruido del movimiento, tambien 3x3, nos la dan en consigna
+            Σ̄ = G Σ G^T + Q_t
         """
         if not self.have_belief:
-            self.get_logger().warn('Delta recibido pero no hay belief inicial. Ignorando delta.')
+            self.get_logger().warn('Delta recibido pero no hay belief inicial. Ignorando delta.') # Si veo esto hay algo mal, capaz corrí las terminales en orden equivocado
             return
 
         delta_rot1 = float(msg.dr1)
@@ -72,17 +72,17 @@ class EKFPrediction(Node):
         mu_bar = self.mu.copy()
         mu_bar[0] += delta_trans * np.cos(theta_mid)
         mu_bar[1] += delta_trans * np.sin(theta_mid)
-        mu_bar[2] = self._normalize_angle(self.mu[2] + (delta_rot1 + delta_rot2))
+        mu_bar[2] = self._normalize_angle(self.mu[2] + (delta_rot1 + delta_rot2))   # Normalizo por si acaso
 
-        # Jacobiano G_t (3x3)
+        # Jacobiano G_t (ecuación 3 del pseudocódigo de Nacho)
         G = np.eye(3)
         G[0, 2] = -delta_trans * np.sin(theta_mid)
         G[1, 2] = delta_trans * np.cos(theta_mid)
 
-        # Q_t: matriz de ruido del movimiento (3x3)
+        # Matriz de ruido de movim. Q_t (consigna), en el pseudocódigo de Nacho sería el "equivalente" a las ec. 4 y 5 que calculan V, M
         Q_t = np.eye(3) * 0.02
 
-        # Predicción de la covarianza: Sigma_gorrito = G Sigma G^T + Q_t
+        # Predicción de la covarianza: Sigma_gorrito = G Sigma G^T + Q_t (ec. 7 del pseudocódigo de Nacho)
         Sigma_bar = G.dot(self.Sigma).dot(G.T) + Q_t
 
         # Actualizamos estado interno
