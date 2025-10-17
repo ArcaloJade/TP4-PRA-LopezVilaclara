@@ -58,7 +58,7 @@ class EKFPrediction(Node):
             Σ̄ = G Σ G^T + Q_t
         """
         if not self.have_belief:
-            self.get_logger().warn('Delta recibido pero no hay belief inicial. Ignorando delta.') # Si veo esto hay algo mal, capaz corrí las terminales en orden equivocado
+            self.get_logger().warn('Delta recibido pero no hay belief inicial. Ignorando delta.') # Si veo esto hay algo mal, seguro corrí las terminales en orden equivocado
             return
 
         delta_rot1 = float(msg.dr1)
